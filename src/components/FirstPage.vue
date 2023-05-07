@@ -5,6 +5,7 @@
   </div>
 </template>
 <script>
+import * as MYCONST from '@/const.js';
 import NavMenu from '@/components/NavMenu.vue'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -18,21 +19,25 @@ export default {
       
       const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
       const renderer = new THREE.WebGLRenderer();
-      renderer.setClearColor(0x444444);
+      renderer.setClearColor(MYCONST.RENDERER_CLEAR_COLOR);
       renderer.setSize( window.innerWidth, window.innerHeight );
       
       this.$el.appendChild( renderer.domElement );
 
       const controls = new OrbitControls( camera, renderer.domElement );
 
-      const axesHelper = new THREE.AxesHelper( 5 );
+      const axesHelper = new THREE.AxesHelper( 10 );
       scene.add( axesHelper );
 
       // const geometry = new THREE.BoxGeometry();
       // const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
       // const cube = new THREE.Mesh( geometry, material );
       // scene.add( cube );
+      const size = 10;
+      const divisions = 10;
 
+      const gridHelper = new THREE.GridHelper( size, divisions );
+      scene.add( gridHelper );
       // const geometryp = new THREE.PlaneGeometry( 10, 10 );
       // const materialp = new THREE.MeshBasicMaterial( {color: 0x444400, side: THREE.DoubleSide} );
       // const plane = new THREE.Mesh( geometryp, materialp );
@@ -43,7 +48,7 @@ export default {
 
       var sphereMesh;
       const createsphere = function () {
-        const radius = 2;
+        const radius = 4;
         const widthSegments = 32;
         const heightSegments = 32;
         const sphereGeometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);

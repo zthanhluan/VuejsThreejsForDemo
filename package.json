@@ -1,5 +1,5 @@
 {
-  "name": "demo",
+  "name": "threejsdemo",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "legendary-cursor": "^1.0.2",
     "three": "^0.152.2",
+    "three-mesh-bvh": "^0.5.23",
     "vue": "^3.2.13",
     "vue-router": "^4.1.6"
   },

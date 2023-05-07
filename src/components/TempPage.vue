@@ -5,6 +5,7 @@
   </div>
 </template>
 <script>
+import * as MYCONST from '@/const.js';
 import NavMenu from '@/components/NavMenu.vue'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -18,14 +19,14 @@ export default {
       
       const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
       const renderer = new THREE.WebGLRenderer();
-      renderer.setClearColor(0x444444);
+      renderer.setClearColor(MYCONST.RENDERER_CLEAR_COLOR);
       renderer.setSize( window.innerWidth, window.innerHeight );
       
       this.$el.appendChild( renderer.domElement );
 
       const controls = new OrbitControls( camera, renderer.domElement );
 
-      const axesHelper = new THREE.AxesHelper( 5 );
+      const axesHelper = new THREE.AxesHelper( 10 );
       scene.add( axesHelper );
 
       camera.position.set(5,5,5);
@@ -42,6 +43,6 @@ export default {
         renderer.setSize(window.innerWidth, window.innerHeight);
       }
       window.addEventListener('resize', onWindowResize);
-    }
   }
+}
 </script>
