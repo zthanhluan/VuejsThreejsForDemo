@@ -4,30 +4,36 @@ import AboutPage from './components/AboutPage.vue';
 import FirstPage from './components/FirstPage.vue';
 import SecondPage from './components/SecondPage.vue';
 import TempPage from './components/TempPage.vue';
+import APage from './components/APage.vue';
 
 const routes = [
   {
-    path: '/threejsdemo/',
+    path: '/a',
+    name: 'A',
+    component: APage
+  },
+  {
+    path: '/',
     name: 'Home',
     component: HomePage
   },
   {
-    path: '/threejsdemo/temp',
+    path: '/temp',
     name: 'Temp Page',
     component: TempPage
   },
   {
-    path: '/threejsdemo/about',
+    path: '/about',
     name: 'About',
     component: AboutPage
   },
   {
-    path: '/threejsdemo/multicoloredsphere',
+    path: '/multicoloredsphere',
     name: 'Multicolored Sphere',
     component: FirstPage
   },
   {
-    path: '/threejsdemo/secondpage',
+    path: '/secondpage',
     name: 'Second Page',
     component: SecondPage
   }

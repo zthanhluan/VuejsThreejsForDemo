@@ -6,24 +6,28 @@
   <div class="y-axis-label">Y Axis</div>
   <div class="z-axis-label">Z Axis</div>
   <div class="nav-buttons">
-    <router-link to="/threejsdemo/" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
-      <button class="nav-button" :class="{ active: $route.path === '/threejsdemo/' }" @click="navigate()">Home</button>
+    <router-link to="/a" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/a' }" @click="navigate()">A</button>
     </router-link>
 
-    <router-link to="/threejsdemo/multicoloredsphere" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
-      <button class="nav-button" :class="{ active: $route.path === '/threejsdemo/multicoloredsphere' }" @click="navigate()">Multicolored Sphere</button>
+    <router-link to="/" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/' }" @click="navigate()">B</button>
     </router-link>
 
-    <router-link to="/threejsdemo/secondpage" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
-      <button class="nav-button" :class="{ active: $route.path === '/threejsdemo/secondpage' }" @click="navigate()">Second Page</button>
+    <router-link to="/multicoloredsphere" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/multicoloredsphere' }" @click="navigate()">Multicolored Sphere</button>
     </router-link>
 
-    <router-link to="/threejsdemo/about" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
-      <button class="nav-button" :class="{ active: $route.path === '/threejsdemo/about' }" @click="navigate()">About</button>
+    <router-link to="/secondpage" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/secondpage' }" @click="navigate()">Second Page</button>
     </router-link>
 
-    <router-link to="/threejsdemo/temp" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
-      <button class="nav-button" :class="{ active: $route.path === '/threejsdemo/temp' }" @click="navigate()">Temp</button>
+    <router-link to="/about" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/about' }" @click="navigate()">About</button>
+    </router-link>
+
+    <router-link to="/temp" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/temp' }" @click="navigate()">Temp</button>
     </router-link>
   </div>
 </template>
