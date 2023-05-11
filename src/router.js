@@ -5,12 +5,18 @@ import FirstPage from './components/FirstPage.vue';
 import SecondPage from './components/SecondPage.vue';
 import TempPage from './components/TempPage.vue';
 import APage from './components/APage.vue';
+import BPage from './components/BPage.vue';
 
 const routes = [
   {
     path: '/a',
     name: 'A',
     component: APage
+  },
+  {
+    path: '/b',
+    name: 'B',
+    component: BPage
   },
   {
     path: '/',

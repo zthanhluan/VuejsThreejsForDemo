@@ -10,8 +10,12 @@
       <button class="nav-button" :class="{ active: $route.path === '/a' }" @click="navigate()">A</button>
     </router-link>
 
+    <router-link to="/b" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/b' }" @click="navigate()">B</button>
+    </router-link>
+
     <router-link to="/" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
-      <button class="nav-button" :class="{ active: $route.path === '/' }" @click="navigate()">B</button>
+      <button class="nav-button" :class="{ active: $route.path === '/' }" @click="navigate()">Home</button>
     </router-link>
 
     <router-link to="/multicoloredsphere" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
