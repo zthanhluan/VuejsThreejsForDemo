@@ -6,8 +6,14 @@ import SecondPage from './components/SecondPage.vue';
 import TempPage from './components/TempPage.vue';
 import APage from './components/APage.vue';
 import BPage from './components/BPage.vue';
+import WaterPage from './components/WaterPage.vue';
 
 const routes = [
+  {
+    path: '/water',
+    name: 'Water',
+    component: WaterPage
+  },
   {
     path: '/a',
     name: 'A',

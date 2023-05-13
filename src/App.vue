@@ -6,7 +6,7 @@
 
 <script>
 import router from './router'
-import LegendaryCursor from "legendary-cursor";
+// import LegendaryCursor from "legendary-cursor";
 
 export default {
   name: 'App',
@@ -15,9 +15,9 @@ export default {
   },
   router, // Sử dụng router trong ứng dụng
   mounted() {
-    window.addEventListener("load", () => {
-      LegendaryCursor.init();
-    });
+    // window.addEventListener("load", () => {
+    //   LegendaryCursor.init();
+    // });
   }
 }
 </script>

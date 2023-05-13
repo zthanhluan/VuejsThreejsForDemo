@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>Create Convex Object Breaker in Threejs</h1>
+    <div class="note-text" style="color:red;">A-W-S-D to move camera. Arrow key to move vehicle. Left click to shoot. Esc to exit</div>
+    <h1 style="color:red;">Create Convex Object Breaker in Threejs</h1>
+    <progress value="0" max="100" id="progressBar"></progress>
     <nav-menu />
     <div id="menuPanel">
       <button id="startButton">Click to Start</button>
@@ -8,7 +10,7 @@
   </div>
 </template>
 <script>
-import * as MYCONST from '@/const.js';
+//import * as MYCONST from '@/const.js';
 import NavMenu from '@/components/NavMenu.vue'
 import * as THREE from 'three'
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls'
@@ -45,11 +47,14 @@ export default {
     )
 
     const renderer = new THREE.WebGLRenderer({ antialias: true })
-    renderer.setClearColor(MYCONST.RENDERER_CLEAR_COLOR);
+    //renderer.setClearColor(MYCONST.RENDERER_CLEAR_COLOR);
     renderer.setSize(window.innerWidth, window.innerHeight)
     this.$el.appendChild(renderer.domElement)
 
     // const controlsOrbit = new OrbitControls(camera, renderer.domElement);
+    const progressBar = document.getElementById(
+      'progressBar'
+    )
 
     const menuPanel = document.getElementById('menuPanel')
     const startButton = document.getElementById('startButton')
@@ -89,7 +94,7 @@ export default {
           controls.moveRight(0.25)
           break
         case 'ArrowRight':
-        {
+          {
             currentDir.applyAxisAngle(axisY, -Math.PI / 10);
             let _q = new THREE.Quaternion();
             _q.setFromAxisAngle(axisY, -Math.PI / 10)
@@ -136,7 +141,7 @@ export default {
           {
             let tempPos = new THREE.Vector3()
             tempPos.copy(weapon.position)
-            let tempDir = new THREE.Vector3(0,0,1)
+            let tempDir = new THREE.Vector3(0, 0, 1)
             tempDir.applyQuaternion(weapon.quaternion);
             tempPos.addScaledVector(tempDir, 0.5)
             new TWEEN.Tween(weapon.position)
@@ -156,7 +161,7 @@ export default {
           {
             let tempPos = new THREE.Vector3()
             tempPos.copy(weapon.position)
-            let tempDir = new THREE.Vector3(0,0,1)
+            let tempDir = new THREE.Vector3(0, 0, 1)
             tempDir.applyQuaternion(weapon.quaternion);
             tempPos.addScaledVector(tempDir, -0.5)
             new TWEEN.Tween(weapon.position)
@@ -200,7 +205,7 @@ export default {
 
     const pmremGenerator = new THREE.PMREMGenerator(renderer)
     const envTexture = new THREE.TextureLoader().load(
-      'img/pano-equirectangular.png',
+      'img/pano-equirectangular.jpg',
       () => {
         material.envMap = pmremGenerator.fromEquirectangular(envTexture).texture
       }
@@ -211,8 +216,8 @@ export default {
     let meshId = 0
 
     const groundMirror = new Reflector(new THREE.PlaneGeometry(1024, 1024), {
-      color: new THREE.Color(0xaaaaaa),
-      //clipBias: 0.003,
+      color: new THREE.Color(0x222222),
+      clipBias: 0.003,
       textureWidth: window.innerWidth * window.devicePixelRatio,
       textureHeight: window.innerHeight * window.devicePixelRatio,
     })
@@ -245,8 +250,7 @@ export default {
       cube.position.y = size.y / 2 + 0.1
       cube.position.z = Math.random() * 50 - 25
 
-      if (Math.abs(cube.position.x - camera.position.x) < 5 && Math.abs(cube.position.z - camera.position.z) < 5)
-      {
+      if (Math.abs(cube.position.x - camera.position.x) < 5 && Math.abs(cube.position.z - camera.position.z) < 5) {
         cube.position.x += 5;
         cube.position.z += 5;
       }
@@ -468,6 +472,7 @@ export default {
     loader.load(
       'models/artillery_military_weapon.glb',
       function (gltf) {
+        progressBar.style.display = 'none'
         gltf.scene.traverse(function (child) {
           if ((child).isMesh) {
             const m = child
@@ -488,11 +493,9 @@ export default {
         scene.add(gltf.scene)
       },
       (xhr) => {
-        console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+        const percentComplete = (xhr.loaded / xhr.total) * 100
+        progressBar.value = percentComplete === Infinity ? 100 : percentComplete
       },
-      (error) => {
-        console.log(error)
-      }
     )
 
     window.addEventListener('resize', onWindowResize, false)
@@ -565,10 +568,19 @@ export default {
 }
 </script>
 <style>
-#menuPanel {
+#progressBar {
+  width: 500px;
+  height: 24px;
   position: absolute;
+  left: 50%;
+  top: 10px;
+  margin-left: -250px;
+}
+
+#menuPanel {
+  position: fixed;
   background-color: rgba(255, 255, 255, 0.5);
-  top: 0px;
+  top: 100px;
   left: 0px;
   width: 100%;
   height: 100%;
