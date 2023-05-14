@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="note-text" style="color:red;">A-W-S-D to move camera. Arrow key to move vehicle. Left click to shoot. Esc to exit</div>
+    <div class="note-text" style="color:red;">A-W-S-D to move camera. Arrow key to move vehicle. Left click to shoot. Esc
+      to exit</div>
     <h1 style="color:red;">Create Convex Object Breaker in Threejs</h1>
     <progress value="0" max="100" id="progressBar"></progress>
     <nav-menu />
@@ -143,6 +144,7 @@ export default {
             tempPos.copy(weapon.position)
             let tempDir = new THREE.Vector3(0, 0, 1)
             tempDir.applyQuaternion(weapon.quaternion);
+            tempDir.y = 0;
             tempPos.addScaledVector(tempDir, 0.5)
             new TWEEN.Tween(weapon.position)
               .to(
@@ -163,6 +165,7 @@ export default {
             tempPos.copy(weapon.position)
             let tempDir = new THREE.Vector3(0, 0, 1)
             tempDir.applyQuaternion(weapon.quaternion);
+            tempDir.y = 0;
             tempPos.addScaledVector(tempDir, -0.5)
             new TWEEN.Tween(weapon.position)
               .to(
@@ -302,18 +305,18 @@ export default {
           new THREE.SphereGeometry(0.5, 16, 16),
           bulletMaterial
         )
-        bullet.position.copy(camera.position)
-        //bullet.position.y += 1
+        bullet.position.copy(weapon.position)
+        bullet.position.y += 2
         scene.add(bullet)
         bullets[bulletId] = bullet
 
-        const bulletShape = new CANNON.Sphere(1)
+        const bulletShape = new CANNON.Sphere(0.5)
         const bulletBody = new CANNON.Body({ mass: 1 })
         bulletBody.addShape(bulletShape)
-        bulletBody.position.x = camera.position.x
-        bulletBody.position.y = camera.position.y
-        bulletBody.position.z = camera.position.z
-        //bulletBody.position.y += 1
+        bulletBody.position.x = weapon.position.x
+        bulletBody.position.y = weapon.position.y
+        bulletBody.position.z = weapon.position.z
+        bulletBody.position.y += 2
 
         world.addBody(bulletBody)
         bulletBodies[bulletId] = bulletBody
@@ -325,9 +328,18 @@ export default {
             }
           }
         })
-        const v = new THREE.Vector3(0, 0, -1) // (0, 0 , -1) to shoot behind
-        v.applyQuaternion(camera.quaternion)
-        v.multiplyScalar(50)
+
+        //const v = raycaster.ray.direction.clone();
+        const v = new THREE.Vector3(0, 0, 1)
+        v.applyQuaternion(weapon.quaternion)
+        // const gunPos = new THREE.Vector3()
+        // gunPos.set(weapon.position.x, weapon.position.y+2, weapon.position.z)
+        //v.subVectors(pointS.position, gunPos).normalize();
+
+        // const v = new THREE.Vector3(0, 0, -1) // (0, 0 , -1) to shoot behind
+        // v.applyQuaternion(camera.quaternion)
+        // v.multiplyScalar(50)
+        v.multiplyScalar(50);
         bulletBody.velocity.set(v.x, v.y, v.z)
         bulletBody.angularVelocity.set(
           Math.random() * 10 + 1,
@@ -459,10 +471,35 @@ export default {
         torus.position.copy(wall_intersects[0].point)
         torus.position.addScaledVector(n, 0.1)
         torus.visible = true;
+        if (weapon) {
+          const rotationMatrix = new THREE.Matrix4()
+          //const rayDirection = raycaster.ray.direction.clone()
+          const direction = new THREE.Vector3()
+          const gunPos = new THREE.Vector3()
+          gunPos.set(weapon.position.x, weapon.position.y+2, weapon.position.z)
+          direction.subVectors(pointS.position, gunPos).normalize();
+          rotationMatrix.lookAt(weapon.position, weapon.position.clone().add(direction), weapon.up)
+          weapon.quaternion.setFromRotationMatrix(rotationMatrix);
+          weapon.rotateY(Math.PI)
+        }
       }
       else {
         pointS.visible = false;
         torus.visible = false;
+        if (weapon) {
+          const rotationMatrix = new THREE.Matrix4()
+          const rayDirection = raycaster.ray.direction.clone()
+          const pointB = new THREE.Vector3();
+          pointB.copy(camera.position).add(rayDirection.multiplyScalar(1000));
+          const direction = new THREE.Vector3()
+          const gunPos = new THREE.Vector3()
+          gunPos.set(weapon.position.x, weapon.position.y+2, weapon.position.z)
+          direction.subVectors(pointB, gunPos).normalize();
+
+          rotationMatrix.lookAt(weapon.position, weapon.position.clone().add(direction), weapon.up)
+          weapon.quaternion.setFromRotationMatrix(rotationMatrix);
+          weapon.rotateY(Math.PI)
+        }
       }
       arrayMeshs = [];
     }
