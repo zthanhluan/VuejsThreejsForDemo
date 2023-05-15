@@ -4,6 +4,7 @@
     <div id="locationData"></div>
     <h1>Create Water in Threejs</h1>
     <nav-menu />
+    <div id="my-gui-container"></div>
   </div>
 </template>
 <script>
@@ -45,6 +46,7 @@ export default {
     let cameraLerp = false
     let controlsChanging = false
     const controls = new OrbitControls(camera, renderer.domElement)
+    controls.maxPolarAngle = Math.PI * 0.495;
     controls.enableDamping = true
     controls.maxDistance = 100
     controls.addEventListener('start', () => {
@@ -57,7 +59,9 @@ export default {
 
     const sun = new THREE.Vector3()
 
-    gui = new GUI()
+    gui = new GUI({ autoPlace: false });
+    var customContainer = document.getElementById('my-gui-container');
+    customContainer.appendChild(gui.domElement);
 
     const gerstnerWater = new GerstnerWater(gui)
     earth.add(gerstnerWater.water)
@@ -73,26 +77,54 @@ export default {
     skyUniforms['mieCoefficient'].value = 0.005
     skyUniforms['mieDirectionalG'].value = 0.8
 
+    // const parameters = {
+    //   elevation: 2,
+    //   azimuth: -7.7,
+    // }
+
+    // const pmremGenerator = new THREE.PMREMGenerator(renderer)
+
+    // function updateSun() {
+    //   const phi = THREE.MathUtils.degToRad(90 - parameters.elevation)
+    //   const theta = THREE.MathUtils.degToRad(parameters.azimuth)
+
+    //   sun.setFromSphericalCoords(1, phi, theta)
+
+    //   sky.material.uniforms['sunPosition'].value.copy(sun)
+    //   gerstnerWater.water.material.uniforms['sunDirection'].value.copy(sun)
+
+    //   scene.environment = pmremGenerator.fromScene(sky).texture
+    // }
+
+    // updateSun()
+
     const parameters = {
-      elevation: 2,
-      azimuth: 180,
-    }
+        elevation: 2,
+        azimuth: 180
+      };
 
-    const pmremGenerator = new THREE.PMREMGenerator(renderer)
+      const pmremGenerator = new THREE.PMREMGenerator(renderer);
+      let renderTarget;
 
-    function updateSun() {
-      const phi = THREE.MathUtils.degToRad(90 - parameters.elevation)
-      const theta = THREE.MathUtils.degToRad(parameters.azimuth)
+      function updateSun() {
 
-      sun.setFromSphericalCoords(1, phi, theta)
+        const phi = THREE.MathUtils.degToRad(90 - parameters.elevation);
+        const theta = THREE.MathUtils.degToRad(parameters.azimuth);
 
-      sky.material.uniforms['sunPosition'].value.copy(sun)
-      gerstnerWater.water.material.uniforms['sunDirection'].value.copy(sun)
+        sun.setFromSphericalCoords(1, phi, theta);
 
-      scene.environment = pmremGenerator.fromScene(sky).texture
-    }
+        sky.material.uniforms['sunPosition'].value.copy(sun);
+        gerstnerWater.water.material.uniforms['sunDirection'].value.copy(sun).normalize();
 
-    updateSun()
+        if (renderTarget !== undefined) renderTarget.dispose();
+
+        renderTarget = pmremGenerator.fromScene(sky);
+
+        scene.environment = renderTarget.texture;
+
+      }
+
+      updateSun();
 
     const divisor = -46080
     const divisorMultiplier = 1.40625
@@ -195,7 +227,7 @@ export default {
     // main user boat
     const loader = new GLTFLoader()
     loader.load(
-      'models/boat.glb',
+      'models/oselvar_wooden_boat.glb',
       function (gltf) {
         gltf.scene.traverse(function (child) {
           if (child.isMesh) {
@@ -207,6 +239,8 @@ export default {
         const floater = new Floater(earth, group, gerstnerWater, true)
         floaters.push(floater)
         controlledBoatId = floaters.length - 1
+
+        gltf.scene.position.y = 0.6
 
         gltf.scene.add(followCamPivot)
         followCamPivot.position.set(0, 5, -7.5)
@@ -220,7 +254,7 @@ export default {
 
         cameraLerp = true
 
-        //loadTestBoxes()
+        loadTestBoxes()
         //loadTestBoat1()
         //loadTestBoat2()
 
@@ -234,23 +268,23 @@ export default {
       }
     )
 
-    // // floating boxes
-    // function loadTestBoxes() {
-    //   const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
+    // floating boxes
+    function loadTestBoxes() {
+      const boxGeometry = new THREE.BoxGeometry(3, 3, 3)
 
-    //   for (let i = 0; i < 10; i++) {
-    //     const box = new THREE.Mesh(
-    //       boxGeometry.clone(),
-    //       new THREE.MeshStandardMaterial({ roughness: 0 })
-    //     )
-    //     const group = new THREE.Group()
-    //     group.position.set(startX + (i * 10 - 30), 0, startZ + (i * 10 - 50))
-    //     group.add(box.clone())
-    //     const floater = new Floater(earth, group, gerstnerWater)
-    //     floaters.push(floater)
-    //     earth.add(group)
-    //   }
-    // }
+      for (let i = 0; i < 10; i++) {
+        const box = new THREE.Mesh(
+          boxGeometry.clone(),
+          new THREE.MeshStandardMaterial({ roughness: 0 })
+        )
+        const group = new THREE.Group()
+        group.position.set(startX + (i * 10 - 30), 0, startZ + (i * 10 - 50))
+        group.add(box.clone())
+        const floater = new Floater(earth, group, gerstnerWater)
+        floaters.push(floater)
+        earth.add(group)
+      }
+    }
 
     // function loadTestBoat1() {
     //   loader.load(
@@ -430,5 +464,11 @@ export default {
   font-family: monospace;
   color: white;
   pointer-events: none;
+}
+
+#my-gui-container {
+  position: absolute;
+  top: 0px;
+  right: 120px;
 }
 </style>

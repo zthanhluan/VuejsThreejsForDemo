@@ -7,6 +7,9 @@ import TempPage from './components/TempPage.vue';
 import APage from './components/APage.vue';
 import BPage from './components/BPage.vue';
 import WaterPage from './components/WaterPage.vue';
+import EdgeDetectPage from './components/EdgeDetectPage.vue';
+import ShadersOceanPage from './components/ShadersOceanPage.vue';
+import GamePage from './components/GamePage.vue';
 
 const routes = [
   {
@@ -48,7 +51,22 @@ const routes = [
     path: '/secondpage',
     name: 'Second Page',
     component: SecondPage
-  }
+  },
+  {
+    path: '/edgedetect',
+    name: 'Edge Detect ',
+    component: EdgeDetectPage
+  },
+  {
+    path: '/shadersocean',
+    name: 'Shaders Ocean ',
+    component: ShadersOceanPage
+  },
+  {
+    path: '/game',
+    name: 'Shoot Game ',
+    component: GamePage
+  },
 ];
 
 const router = createRouter({

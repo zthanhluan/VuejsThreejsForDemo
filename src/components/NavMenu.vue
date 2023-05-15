@@ -12,7 +12,7 @@
     </router-link>
 
     <router-link to="/water" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
-      <button class="nav-button" :class="{ active: $route.path === '/water' }" @click="navigate()">Water</button>
+      <button class="nav-button" :class="{ active: $route.path === '/water' }" @click="navigate()">Water Boat</button>
     </router-link>
 
     <router-link to="/a" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
@@ -37,8 +37,20 @@
       <button class="nav-button" :class="{ active: $route.path === '/about' }" @click="navigate()">Select Box</button>
     </router-link>
 
+    <router-link to="/edgedetect" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/edgedetect' }" @click="navigate()">Edge Detect</button>
+    </router-link>
+
+    <router-link to="/shadersocean" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/shadersocean' }" @click="navigate()">Shaders Ocean</button>
+    </router-link>
+
+    <router-link to="/game" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
+      <button class="nav-button" :class="{ active: $route.path === '/game' }" @click="navigate()">Shoot Game</button>
+    </router-link>
+
     <router-link to="/temp" exact exact-active-class="active" active-class="inactive" v-slot="{ navigate }">
-      <button class="nav-button" :class="{ active: $route.path === '/temp' }" @click="navigate()">Temp</button>
+      <button class="nav-button" :class="{ active: $route.path === '/temp' }" @click="navigate()">Temp Page</button>
     </router-link>
   </div>
 </template>
