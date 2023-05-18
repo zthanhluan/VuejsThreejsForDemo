@@ -1,13 +1,16 @@
 <template>
   <div>
-    <div class="note-text" style="color:red;">
-			Octree threejs demo - basic collisions with static triangle mesh<br />
-			MOUSE to look around and to throw balls<br/>
-			WASD to move and SPACE to jump
-		</div>
-    <h1 style="color:red;">Create Simple Game</h1>
+    <div class="note-text">
+      Octree threejs demo - basic collisions with static triangle mesh<br />
+      MOUSE to look around and to throw balls<br />
+      WASD to move and SPACE to jump
+    </div>
+
     <nav-menu />
     <div id="my-gui-container"></div>
+    <div id="menuPanel">
+      <button id="startButton">Click to Start</button>
+    </div>
   </div>
 </template>
 <script>
@@ -15,7 +18,7 @@
 import NavMenu from '@/components/NavMenu.vue'
 import * as THREE from 'three';
 
-import Stats from 'three/addons/libs/stats.module.js';
+//import Stats from 'three/addons/libs/stats.module.js';
 
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
@@ -25,6 +28,8 @@ import { OctreeHelper } from 'three/addons/helpers/OctreeHelper.js';
 import { Capsule } from 'three/addons/math/Capsule.js';
 
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+
+import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls'
 
 let gui;
 
@@ -78,11 +83,11 @@ export default {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     container.appendChild(renderer.domElement);
 
-    const stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '0px';
-    stats.domElement.style.left = '330px';
-    container.appendChild(stats.domElement);
+    //const stats = new Stats();
+    //stats.domElement.style.position = 'absolute';
+    //stats.domElement.style.top = '0px';
+    //stats.domElement.style.left = '330px';
+    //container.appendChild(stats.domElement);
 
     const GRAVITY = 30;
 
@@ -141,9 +146,23 @@ export default {
 
     });
 
+    const menuPanel = document.getElementById('menuPanel')
+    const startButton = document.getElementById('startButton')
+    startButton.addEventListener(
+      'click',
+      function () {
+        controls1.lock()
+      },
+      false
+    )
+
+    const controls1 = new PointerLockControls(camera, renderer.domElement)
+    controls1.addEventListener('lock', () => (menuPanel.style.display = 'none'))
+    controls1.addEventListener('unlock', () => (menuPanel.style.display = 'block'))
+
     container.addEventListener('mousedown', () => {
 
-      document.body.requestPointerLock();
+      //document.body.requestPointerLock();
 
       mouseTime = performance.now();
 
@@ -151,18 +170,21 @@ export default {
 
     document.addEventListener('mouseup', () => {
 
-      if (document.pointerLockElement !== null) throwBall();
+      //if (document.pointerLockElement !== null)
+      if (menuPanel.style.display == 'none')
+        throwBall();
 
     });
 
     document.body.addEventListener('mousemove', (event) => {
 
-      if (document.pointerLockElement === document.body) {
-
+      //if (document.pointerLockElement === document.body) {
+      if (menuPanel.style.display == 'none') {
         camera.rotation.y -= event.movementX / 500;
         camera.rotation.x -= event.movementY / 500;
-
       }
+
+      //}
 
     });
 
@@ -449,7 +471,7 @@ export default {
 
         });
 
-      gui.open();
+      gui.close();
 
       animate();
 
@@ -491,7 +513,7 @@ export default {
 
       renderer.render(scene, camera);
 
-      stats.update();
+      //stats.update();
 
       requestAnimationFrame(animate);
 
@@ -500,10 +522,3 @@ export default {
   }
 }
 </script>
-<style>
-#my-gui-container {
-  position: absolute;
-  top: 0px;
-  right: 120px;
-}
-</style>

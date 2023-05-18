@@ -1,15 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from './components/HomePage.vue';
-import AboutPage from './components/AboutPage.vue';
-import FirstPage from './components/FirstPage.vue';
-import SecondPage from './components/SecondPage.vue';
+import FollowCamPage from './components/FollowCamPage.vue';
+import SelectBoxPage from './components/SelectBoxPage.vue';
+import MulticoloredSpherePage from './components/MulticoloredSpherePage.vue';
+import ParticlesSystemPage from './components/ParticlesSystemPage.vue';
 import TempPage from './components/TempPage.vue';
-import APage from './components/APage.vue';
-import BPage from './components/BPage.vue';
+import CanonJSPage from './components/CanonJSPage.vue';
+import ConvexObjectPage from './components/ConvexObjectPage.vue';
 import WaterPage from './components/WaterPage.vue';
 import EdgeDetectPage from './components/EdgeDetectPage.vue';
 import ShadersOceanPage from './components/ShadersOceanPage.vue';
 import GamePage from './components/GamePage.vue';
+import Draw3DSurfacePage from './components/Draw3DSurfacePage.vue';
+import DrawRainBowLightPage from './components/DrawRainBowLightPage.vue';
+import DrawDimensionPage from './components/DrawDimensionPage.vue';
+import DrawSelectAreaPage from './components/DrawSelectAreaPage.vue';
+import EdgeProjectionPage from './components/EdgeProjectionPage.vue';
+import CharacterMovementPage from './components/CharacterMovementPage.vue';
 
 const routes = [
   {
@@ -18,19 +24,19 @@ const routes = [
     component: WaterPage
   },
   {
-    path: '/a',
-    name: 'A',
-    component: APage
+    path: '/canonjs',
+    name: 'Canon JS',
+    component: CanonJSPage
   },
   {
-    path: '/b',
-    name: 'B',
-    component: BPage
+    path: '/convexobject',
+    name: 'Convex Object',
+    component: ConvexObjectPage
   },
   {
     path: '/',
-    name: 'Home',
-    component: HomePage
+    name: 'Follow Cam',
+    component: FollowCamPage
   },
   {
     path: '/temp',
@@ -38,19 +44,19 @@ const routes = [
     component: TempPage
   },
   {
-    path: '/about',
-    name: 'About',
-    component: AboutPage
+    path: '/selectbox',
+    name: 'Select Box',
+    component: SelectBoxPage
   },
   {
     path: '/multicoloredsphere',
     name: 'Multicolored Sphere',
-    component: FirstPage
+    component: MulticoloredSpherePage
   },
   {
-    path: '/secondpage',
-    name: 'Second Page',
-    component: SecondPage
+    path: '/particlessystem',
+    name: 'Particles System Page',
+    component: ParticlesSystemPage
   },
   {
     path: '/edgedetect',
@@ -67,6 +73,37 @@ const routes = [
     name: 'Shoot Game ',
     component: GamePage
   },
+  {
+    path: '/draw3dsurface',
+    name: 'Draw 3D Surface ',
+    component: Draw3DSurfacePage
+  },
+  {
+    path: '/rainbow',
+    name: 'Rainbow Light ',
+    component: DrawRainBowLightPage
+  },
+  {
+    path: '/drawdimen',
+    name: 'Draw Dimension ',
+    component: DrawDimensionPage
+  },
+  {
+    path: '/selectarea',
+    name: 'Select Area ',
+    component: DrawSelectAreaPage
+  },
+  {
+    path: '/edgeprojection',
+    name: 'Edge Projection ',
+    component: EdgeProjectionPage
+  },
+  {
+    path: '/charactermovement',
+    name: 'Character Movement ',
+    component: CharacterMovementPage
+  },
+  
 ];
 
 const router = createRouter({

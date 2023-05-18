@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="color:red;">Create Edge Detect Object</h1>
+
     <nav-menu />
     <div id="my-gui-container"></div>
   </div>
@@ -139,7 +139,7 @@ export default {
       customContainer.appendChild(gui.domElement);
 
       gui.add(params, 'enable');
-      gui.open();
+      gui.close();
 
       //
 
@@ -178,10 +178,3 @@ export default {
   }
 }
 </script>
-<style>
-#my-gui-container {
-  position: absolute;
-  top: 0px;
-  right: 120px;
-}
-</style>

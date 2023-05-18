@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Create Shaders Ocean</h1>
+
     <nav-menu />
     <div id="my-gui-container"></div>
   </div>
@@ -156,15 +156,15 @@ export default {
       const folderSky = gui.addFolder('Sky');
       folderSky.add(parameters, 'elevation', 0, 90, 0.1).onChange(updateSun);
       folderSky.add(parameters, 'azimuth', - 180, 180, 0.1).onChange(updateSun);
-      folderSky.open();
+      //folderSky.open();
 
       const waterUniforms = water.material.uniforms;
 
       const folderWater = gui.addFolder('Water');
       folderWater.add(waterUniforms.distortionScale, 'value', 0, 8, 0.1).name('distortionScale');
       folderWater.add(waterUniforms.size, 'value', 0.1, 10, 0.1).name('size');
-      folderWater.open();
-
+      //folderWater.open();
+      gui.close()
       //
 
       window.addEventListener('resize', onWindowResize);
@@ -205,10 +205,3 @@ export default {
   }
 }
 </script>
-<style>
-#my-gui-container {
-  position: absolute;
-  top: 0px;
-  right: 120px;
-}
-</style>

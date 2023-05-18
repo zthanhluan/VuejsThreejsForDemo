@@ -2,7 +2,7 @@
   <div>
     <div id="boatData"></div>
     <div id="locationData"></div>
-    <h1>Create Water in Threejs</h1>
+
     <nav-menu />
     <div id="my-gui-container"></div>
   </div>
@@ -59,12 +59,13 @@ export default {
 
     const sun = new THREE.Vector3()
 
-    gui = new GUI({ autoPlace: false });
-    var customContainer = document.getElementById('my-gui-container');
+    gui = new GUI({ autoPlace: false })
+    var customContainer = document.getElementById('my-gui-container')
     customContainer.appendChild(gui.domElement);
 
     const gerstnerWater = new GerstnerWater(gui)
     earth.add(gerstnerWater.water)
+    gui.close()
 
     const sky = new Sky()
     sky.scale.setScalar(10000)
@@ -445,30 +446,3 @@ export default {
   }
 }
 </script>
-<style>
-#boatData {
-  position: absolute;
-  left: 20px;
-  bottom: 50px;
-  font-size: 17px;
-  font-family: monospace;
-  color: white;
-  pointer-events: none;
-}
-
-#locationData {
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-  font-size: 17px;
-  font-family: monospace;
-  color: white;
-  pointer-events: none;
-}
-
-#my-gui-container {
-  position: absolute;
-  top: 0px;
-  right: 120px;
-}
-</style>
